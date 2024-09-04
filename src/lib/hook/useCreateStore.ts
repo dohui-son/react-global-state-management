@@ -1,10 +1,10 @@
-type Store<T> = {
+export type Store<T> = {
   getState: () => T;
   setState: (action: T | ((prev: T) => T)) => void;
   subscribe: (callback: () => void) => () => void;
 };
 
-export const createStore = <T extends unknown>(initialState: T): Store<T> => {
+export const useCreateStore = <T extends unknown>(initialState: T): Store<T> => {
   let state = initialState;
   const callbacks = new Set<() => void>();
 
