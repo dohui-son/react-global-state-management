@@ -1,20 +1,17 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, Context } from "react";
 import { Store, useCreateStore } from "../hook/useCreateStore";
-import { createContext } from "vm";
 
 interface Args<T> {
   initialState: T;
   children: ReactNode;
-  store: Store<T>;
+  context: Context<Store<T>>;
 }
 
-export const StoreProvider = <T extends unknown>({ initialState, children, store }: Args<T>) => {
-  const StoreContext = createContext(store);
-
+export const StoreProvider = <T extends unknown>({ initialState, children, context }: Args<T>) => {
   const storeRef = useRef<Store<T>>();
   if (!storeRef.current) {
     storeRef.current = useCreateStore(initialState);
   }
 
-  return <StoreContext.Provider value={storeRef.current}>{children}</StoreContext.Provider>;
+  return <context.Provider value={storeRef.current}>{children}</context.Provider>;
 };
