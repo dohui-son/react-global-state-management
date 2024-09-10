@@ -1,9 +1,11 @@
 import "./App.css";
+import MainPage from "./page/main";
 
 function App() {
   return (
     <div className="App">
-      <header />
+      <header>global state</header>
+      <MainPage />
     </div>
   );
 }
