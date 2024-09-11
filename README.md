@@ -1,3 +1,11 @@
+# Global State Management
+
+- vanilla
+- with context api
+- event
+- [ ] proxy
+- [ ] signal
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -9,9 +9,10 @@ export type GlobalStateStore<T extends InitialGlobalState> = {
   subscribe: (callback: () => void) => () => void;
 };
 
-export const createGlobalStateStore = <T extends InitialGlobalState>(
-  initialState: T
-): GlobalStateStore<T> => {
+// createGlobalStateStore 함수로 전역 상태 관리 객체를 생성하고,
+// useGlobalStateStore 훅을 사용하여 전역 상태를 구독 및 업데이트
+
+export const createGlobalStateStore = <T extends InitialGlobalState>(initialState: T): GlobalStateStore<T> => {
   let state = initialState;
   const callbacks = new Set<() => void>();
 
@@ -26,6 +27,7 @@ export const createGlobalStateStore = <T extends InitialGlobalState>(
     }
 
     callbacks.forEach((callback) => callback());
+    //상태가 변경되면 등록된 모든 콜백을 실행. 상태를 구독하는 컴포넌트들이 상태 변화에 반응하도록
   };
 
   const subscribe = (callback: () => void) => {
@@ -46,9 +48,7 @@ export const useGlobalStateStore = <T extends InitialGlobalState>({
   const [state, setState] = useState(() => selector(store.getState()));
 
   useEffect(() => {
-    const unsubscribe = store.subscribe(() =>
-      setState(selector(store.getState()))
-    );
+    const unsubscribe = store.subscribe(() => setState(selector(store.getState())));
     setState(selector(store.getState()));
     return () => unsubscribe();
   }, []);
